@@ -1,16 +1,10 @@
-import os
-import glob
+from openpyxl import Workbook
 import csv
-import xlwt 
 
-for csvfile in glob.glob(os.path.join('.', '*.csv')):
-    wb = xlwt.Workbook()
-    ws = wb.add_sheet('data')
-    with open(csvfile, 'rb') as f:
-        reader = csv.reader(f)
-        for r, row in enumerate(reader):
-            for c, val in enumerate(row):
-                ws.write(r, c, val)
-    wb.save(csvfile + '.xls') 
- 
 
+wb = Workbook()
+ws = wb.active
+with open('report.csv', 'r') as f:
+    for row in csv.reader(f):
+        ws.append(row)
+wb.save('name.xlsx')
